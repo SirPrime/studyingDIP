@@ -54,8 +54,7 @@ public class Kuwahara {
                 ip2.putPixelValue(u, v, mMin);
             }
         }
-        ImagePlus im2 = new ImagePlus("Kuwahara gray filter", ip2);
-        return im2;
+        return new ImagePlus("Kuwahara gray filter", ip2);
     }
 
     public double[] evalSubregion(ImageProcessor ip, int[][] R, int u, int v) {
