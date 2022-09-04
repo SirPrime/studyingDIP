@@ -1,4 +1,4 @@
-package exCap17;
+package exBnB2Ed.cap17;
 
 import ij.IJ;
 import ij.ImagePlus;
@@ -22,8 +22,8 @@ public class Ex17_4 {
         ImageProcessor ip3 = colorFilters.Diffusion.gaussianKernel(ip, n, alpha);  // gaussian
         ImagePlus im2 = new ImagePlus("filters.Diffusion iterating", ip2);
         ImagePlus im3 = new ImagePlus("filters.Diffusion with gaussian kernel", ip3);
-        new FileSaver(im2).saveAsPng("coloreando/img/diffusionIter.png");
-        new FileSaver(im3).saveAsPng("coloreando/img/diffusionGauss.png");
+        new FileSaver(im2).saveAsPng("imaginando/img/diffusionIter.png");
+        new FileSaver(im3).saveAsPng("imaginando/img/diffusionGauss.png");
 
         // Impulse response for gaussian kernel
 //        double sigma = Math.sqrt(2*n*alpha);
@@ -31,7 +31,7 @@ public class Ex17_4 {
 //        double[][] gaussianKernel = grayScaleFilters.gaussian2dKernel(sigma, r);
 //        ImageProcessor ip = Diffusion.impulseResponse(11,11, gaussianKernel);
 //        ImagePlus im4 = new ImagePlus("Impulse response. Sigma = " + sigma, ip);
-//        new FileSaver(im4).saveAsPng("coloreando/img/impulseResp" + "N" + n + ".png");
+//        new FileSaver(im4).saveAsPng("imaginando/img/impulseResp" + "N" + n + ".png");
 
 //        im2.show();
     }

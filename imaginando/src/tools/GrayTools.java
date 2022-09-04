@@ -15,7 +15,7 @@ public class GrayTools {
     }
 
     /**
-     * Application of a filter to a gray scale image
+     * Application of a given filter to a gray scale image
      * @param kernel: must be normalized
      * @return Filtered image
      */
@@ -25,7 +25,8 @@ public class GrayTools {
 
         int w = ip.getWidth();
         int h = ip.getHeight();
-        int r = kernel.length/2;  // kernel's radius
+        int rx = kernel[0].length/2;  // kernel's horizontal radius
+        int ry = kernel.length/2;  // kernel's vertical radius
 
         // image environment
         for (int v = 0; v < h; v++) {  // rows
@@ -33,22 +34,22 @@ public class GrayTools {
                 double s = 0;  // sum of px.kr
 
                 // kernel environment
-                for (int j = -r; j < r + 1; j++) {
-                    for (int i = -r; i < r + 1; i++) {
-                        int x = u + i;
-                        int y = v + j;
-                        if (x < 0) {  // left edge
-                            x = 0;
-                        } else if (x >= w) {
-                            x = w - 1;  // right edge
+                for (int i = -ry; i < ry + 1; i++) {  // rows
+                    for (int j = -rx; j < rx + 1; j++) {  // columns
+                        int x = u + j;  // pixel x coordinate
+                        int y = v + i;  // pixel y coordinate
+                        if (x < 0) {  // beyond left edge
+                            x = 0;  // repeats left edge pixel
+                        } else if (x >= w) { // beyond right pixel
+                            x = w - 1;  // repeats right edge pixel
                         }
-                        if (y < 0) {  // top edge
-                            y = 0;
-                        } else if (y >= h) {  // bottom edge
-                            y = h - 1;
+                        if (y < 0) {  // beyond top edge
+                            y = 0;  // repeats top edge pixel
+                        } else if (y >= h) {  // beyond bottom edge
+                            y = h - 1;  // repeats bottom edge pixel
                         }
-                        int px = ip.getPixel(x, y);
-                        double kr = kernel[i + r][j + r];
+                        int px = ip.getPixel(x, y);  // get pixel value
+                        double kr = kernel[i + ry][j + rx];  // get kernel value
                         s += px * kr;
                     }
                 }
@@ -56,36 +57,6 @@ public class GrayTools {
             }
         }
         return ip2;
-    }
-
-    public static double[][] gaussian2dKernel(double sigma, int radius) {
-
-        int kernelWidth = 2*radius + 1;
-        double[][] kernel = new double[kernelWidth][kernelWidth];
-
-        double H;
-        double W = 0.0;
-        for (int x = -radius; x < radius + 1; x++) {
-            for (int y = -radius; y < radius + 1; y++) {
-                if (sigma == 0.0) {
-                    H = 1.0;
-                }
-                else {
-                    H = Math.exp(-((double) x * x + y * y) / 2 / sigma / sigma);  // gaussian expression
-                }
-                int i = x + radius;
-                int j = y + radius;
-                kernel[i][j] = H;
-                W += H;
-            }
-        }
-        // Normalization
-        for (int i = 0; i < kernelWidth; i++) {
-            for (int j = 0; j < kernelWidth; j++) {
-                kernel[i][j] = kernel[i][j] / W;
-            }
-        }
-        return kernel;
     }
 
     /**
@@ -158,5 +129,28 @@ public class GrayTools {
             }
         }
         return new ImagePlus("Noised image", fp2);
+    }
+
+    /**
+     * Add a constant number tu the pixel values of an image
+     * @param im: image
+     * @param constant: value to be added
+     * @return Image as an array
+     */
+    public static int[][] addConstant (ImagePlus im, int constant) {
+        ImageProcessor ip = im.getProcessor();
+
+        int w = im.getWidth();
+        int h = im.getHeight();
+
+        int[][] imArray = new int[h][w];  // image as array
+
+        for (int v = 0; v < h; v++) {
+            for (int u = 0; u < w; u++) {
+                int p = ip.get(u, v);
+                imArray[v][u] = p + constant;
+            }
+        }
+        return imArray;
     }
 }

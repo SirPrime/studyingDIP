@@ -1,5 +1,6 @@
 package colorFilters;
 
+import tools.KernelGen;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
 import tools.GrayTools;
@@ -39,7 +40,7 @@ public class Diffusion {
 
         double sn = Math.sqrt(2*n*alpha);
         int radius = (int) Math.ceil(sn);
-        double[][] kernel = GrayTools.gaussian2dKernel(sn, radius);
+        double[][] kernel = KernelGen.gauss(sn, radius);
 
         return GrayTools.convolution(ip, kernel);
     }

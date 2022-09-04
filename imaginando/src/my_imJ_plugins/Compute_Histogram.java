@@ -1,4 +1,4 @@
-package tools;
+package my_imJ_plugins;
 
 import ij.ImagePlus;
 import ij.plugin.filter.PlugInFilter;

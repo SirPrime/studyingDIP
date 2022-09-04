@@ -1,4 +1,4 @@
-package exCap17;
+package exBnB2Ed.cap17;
 
 import grayFilters.Bilateral;
 import grayFilters.Kuwahara;
@@ -13,7 +13,7 @@ public class Ex17_5 {
 
     public static void main(String[] args) {
 
-        ImagePlus im = IJ.openImage("coloreando/img/diagonal-test1-noise.png");
+        ImagePlus im = IJ.openImage("imaginando/img/diagonal-test1-noise.png");
         ImagePlus noiseIm = tools.GrayTools.addGaussianNoise(im, 2);
 
         // Kuwahara
